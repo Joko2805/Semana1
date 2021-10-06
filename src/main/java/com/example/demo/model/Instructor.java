@@ -3,6 +3,11 @@ package com.example.demo.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
+
+@ApiModel(description = "Contiene toda la informacacion relativa de los instructores")
 public class Instructor implements Serializable{
 
 	/**
@@ -10,6 +15,7 @@ public class Instructor implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@ApiModelProperty(notes = "Indentificador unico del instructor", required = true)
 	private int instructorId;
 	private String nombre;
 	private String apellido;
