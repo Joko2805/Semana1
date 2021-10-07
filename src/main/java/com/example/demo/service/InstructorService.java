@@ -7,7 +7,7 @@ import com.example.demo.model.Instructor;
 public interface InstructorService {
 	void registrar(Instructor instructor);
 	void actualizar(Instructor instructor);
-	Instructor buscar(int id);
-	void eliminar(int id);
+	Instructor buscar(Integer id);
+	void eliminar(Integer id);
 	Collection<Instructor> listar();
 }

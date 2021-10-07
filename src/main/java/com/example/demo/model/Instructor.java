@@ -3,6 +3,18 @@ package com.example.demo.model;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+@Entity
+@Table(name = "instructores")
 public class Instructor implements Serializable{
 
 	/**
@@ -10,11 +22,23 @@ public class Instructor implements Serializable{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int instructorId;
+	
+	@Column
 	private String nombre;
+	
+	@Column
 	private String apellido;
+	
+	@Column
 	private String password;
+	
+	@Column
 	private String email;
+	
+	@Temporal(TemporalType.DATE)
 	private Date fregistro;
 	
 	public Instructor() {
@@ -29,6 +53,11 @@ public class Instructor implements Serializable{
 		this.password = password;
 		this.email = email;
 		this.fregistro = fregistro;
+	}
+	
+	@PrePersist
+	public void prePersist() {
+		fregistro = new Date();
 	}
 
 	public int getInstructorId() {

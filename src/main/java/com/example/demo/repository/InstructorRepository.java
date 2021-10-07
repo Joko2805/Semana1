@@ -1,14 +1,9 @@
 package com.example.demo.repository;
 
-import java.util.Collection;
+import org.springframework.data.repository.CrudRepository;
 
 import com.example.demo.model.Instructor;
 
-public interface InstructorRepository {
+public interface InstructorRepository extends CrudRepository<Instructor,Integer> {
 	
-	void registrar(Instructor instructor);
-	void actualizar(Instructor instructor);
-	Instructor buscar(int id);
-	void eliminar(int id);
-	Collection<Instructor> listar();
 }
