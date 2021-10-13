@@ -57,7 +57,7 @@ public class Instructor implements Serializable{
 	
 	@PrePersist
 	public void prePersist() {
-		fregistro = new Date();
+		this.fregistro = new Date();
 	}
 
 	public int getInstructorId() {

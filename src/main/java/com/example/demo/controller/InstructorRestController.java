@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -29,6 +31,14 @@ public class InstructorRestController {
 	public ResponseEntity<?> listar(){
 		//Obteniendo la lista de objetos
 		Collection<Instructor> lista = service.listar();
+		//Creamos un objeto ResponseEntity pasandole la lista y el estado Https
+		return new ResponseEntity<>(lista,HttpStatus.OK);
+	}
+	
+	@GetMapping("/buscarPorNombre")
+	public ResponseEntity<?> buscarPorId(@RequestParam(name = "nombre") String nombre){
+		//Obteniendo la lista de objetos
+		List<Instructor> lista = service.buscarPorNombre(nombre);
 		//Creamos un objeto ResponseEntity pasandole la lista y el estado Https
 		return new ResponseEntity<>(lista,HttpStatus.OK);
 	}
