@@ -1,28 +1,17 @@
 package com.example.demo.model;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
+import java.util.*;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "instructores")
 public class Instructor implements Serializable{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	
 	@Id
+	@Column(name = "instructor_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int instructorId;
 	
@@ -40,6 +29,22 @@ public class Instructor implements Serializable{
 	
 	@Temporal(TemporalType.DATE)
 	private Date fregistro;
+	
+	@OneToOne(mappedBy = "instructor") 
+	private Conyuge conyuge;
+	
+	@OneToMany(mappedBy = "instructor", cascade = CascadeType.REMOVE)
+	private Collection<Taller> itemsTaller = new ArrayList<>();
+	
+	@ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REMOVE})
+	@JoinTable(name = "instructores_tecnologias",
+				joinColumns = @JoinColumn(name = "instructor_id", nullable = false,
+										foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (instructor_id)"
+																		+ "references instructores(instructor_id)")),
+				inverseJoinColumns = @JoinColumn(name = "tecnologia_id", nullable = false,
+										foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (tecnologia_id)"
+																		+ "references tecnologias(tecnologia_id)")))
+	private Set<Tecnologia> itemsTecnologia = new HashSet<>();
 	
 	public Instructor() {
 		
@@ -106,6 +111,22 @@ public class Instructor implements Serializable{
 
 	public void setFregistro(Date fregistro) {
 		this.fregistro = fregistro;
+	}
+
+	public Conyuge getConyuge() {
+		return conyuge;
+	}
+
+	public void setConyuge(Conyuge conyuge) {
+		this.conyuge = conyuge;
+	}
+
+	public Collection<Taller> getItemsTaller() {
+		return itemsTaller;
+	}
+
+	public void setItemsTaller(Collection<Taller> itemsTaller) {
+		this.itemsTaller = itemsTaller;
 	}
 	
 }
