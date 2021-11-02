@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "conyuges")
 public class Conyuge implements Serializable {
@@ -20,6 +22,7 @@ public class Conyuge implements Serializable {
 	@JoinColumn(name = "instructor_id", nullable = false, unique = true,
 						foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (instructor_id)"
 																		+ "references instructores(instructor_id)"))
+	@JsonBackReference
 	private Instructor instructor;
 
 	public Long getConyugeDni() {

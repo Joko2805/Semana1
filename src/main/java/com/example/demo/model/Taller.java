@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "talleres")
 public class Taller implements Serializable {
@@ -28,6 +30,7 @@ public class Taller implements Serializable {
 	@JoinColumn(name = "instructor_id", nullable = false,
 				foreignKey = @ForeignKey(foreignKeyDefinition = "foreign key (instructor_id)"
 																+ "references instructores(instructor_id)"))
+	@JsonBackReference
 	private Instructor instructor;
 
 	public Taller() {

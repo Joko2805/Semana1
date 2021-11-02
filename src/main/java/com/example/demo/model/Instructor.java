@@ -128,5 +128,13 @@ public class Instructor implements Serializable{
 	public void setItemsTaller(Collection<Taller> itemsTaller) {
 		this.itemsTaller = itemsTaller;
 	}
+
+	public Set<Tecnologia> getItemsTecnologia() {
+		return itemsTecnologia;
+	}
+
+	public void setItemsTecnologia(Set<Tecnologia> itemsTecnologia) {
+		this.itemsTecnologia = itemsTecnologia;
+	}
 	
 }
