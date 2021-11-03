@@ -38,6 +38,9 @@ public class Instructor implements Serializable{
 	@Column
 	private String email;
 	
+	@Column
+	private Double salario;
+	
 	@Temporal(TemporalType.DATE)
 	private Date fregistro;
 	
@@ -45,16 +48,16 @@ public class Instructor implements Serializable{
 		
 	}
 	
-	public Instructor(int instructorId, String nombre, String apellido, String password, String email, Date fregistro) {
+	public Instructor(String nombre, String apellido, String password, String email, Double salario, Date fregistro) {
 		super();
-		this.instructorId = instructorId;
 		this.nombre = nombre;
 		this.apellido = apellido;
 		this.password = password;
 		this.email = email;
+		this.salario = salario;
 		this.fregistro = fregistro;
 	}
-	
+
 	@PrePersist
 	public void prePersist() {
 		this.fregistro = new Date();
@@ -106,6 +109,14 @@ public class Instructor implements Serializable{
 
 	public void setFregistro(Date fregistro) {
 		this.fregistro = fregistro;
+	}
+
+	public Double getSalario() {
+		return salario;
+	}
+
+	public void setSalario(Double salario) {
+		this.salario = salario;
 	}
 	
 }

@@ -87,4 +87,35 @@ public class InstructorRestController {
 			return new ResponseEntity<>(HttpStatus.OK);
 		}
 	}
+	
+	@GetMapping("/listar_public")
+	public ResponseEntity<?> listarPUBLIC() 	{
+		Collection<Instructor> itemsInstructor=service.listar();
+		
+		if(itemsInstructor.isEmpty()) {
+			return new ResponseEntity<>(itemsInstructor,HttpStatus.NO_CONTENT);
+		}		
+		return new ResponseEntity<>(itemsInstructor,HttpStatus.OK);
+	}
+	
+	@GetMapping("/listar_admin")
+	public ResponseEntity<?> listarADMIN() {
+		Collection<Instructor> itemsInstructor=service.listar();
+		
+		if(itemsInstructor.isEmpty()) {
+			return new ResponseEntity<>(itemsInstructor,HttpStatus.NO_CONTENT);
+		}		
+		return new ResponseEntity<>(itemsInstructor,HttpStatus.OK);
+	}
+	
+	@GetMapping("/listar_user")
+	public ResponseEntity<?> listarUSER() {
+		Collection<Instructor> itemsInstructor=service.listar();
+		
+		if(itemsInstructor.isEmpty()) {
+			return new ResponseEntity<>(itemsInstructor,HttpStatus.NO_CONTENT);
+		}		
+		return new ResponseEntity<>(itemsInstructor,HttpStatus.OK);
+	}
+
 }
