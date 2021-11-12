@@ -1,11 +1,14 @@
 package com.example.demo.security;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -15,11 +18,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	
+	@Autowired
+	private UserDetailsService userDetailService;
+	
 	//autenticacion
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		/*
 		auth.inMemoryAuthentication().withUser("alex").password(passwordEncoder().encode("1234")).roles("ADMIN");
 		auth.inMemoryAuthentication().withUser("jose").password(passwordEncoder().encode("1234")).roles("USER");
+		auth.inMemoryAuthentication().withUser("editor").password(passwordEncoder().encode("editor")).roles("EDITOR");
+		auth.inMemoryAuthentication().withUser("writer").password(passwordEncoder().encode("writer")).roles("WRITER");*/
+		auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder());
 	}
 
 	//restrigir permiso
@@ -28,8 +38,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	{		
 		http.authorizeRequests()
 		    .antMatchers("/instructor/listar_public").permitAll()
-		    .antMatchers("/instructor/listar_admin").access("hasRole('ADMIN')")
-		    .antMatchers("/instructor/listar_user").access("hasRole('USER')");
+		    .antMatchers("/instructor/listar_admin").hasAuthority("ADMIN")
+		    .antMatchers("/instructor/listar_user").hasAuthority("USER")
+			.antMatchers(HttpMethod.POST,"/instructor/**").hasAnyAuthority("ADMIN","WRITER")
+			.antMatchers(HttpMethod.PUT,"/instructor/**").hasAnyAuthority("ADMIN","EDITOR")
+			.antMatchers(HttpMethod.DELETE,"/instructor/**").hasAuthority("ADMIN");
 		
 		http.authorizeRequests().and()
 			.httpBasic();
