@@ -11,6 +11,5 @@ public class DemoApplication {
 	}
 	
 	//Todos los paquetes tienen que estar dentro de com.example.demo o no funcionara
-	
 	//Un ejemplo seria com.example.demo.miPaquete
 }
